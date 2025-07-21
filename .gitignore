@@ -1,5 +1,6 @@
 garminconnect-tokens/
 override-default-vars.env
+.env
 kubernetes-spec.yaml
 manual_login.py
 compose.yml
