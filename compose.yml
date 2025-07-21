@@ -10,6 +10,8 @@ services:
       - influxdb
     volumes:
       - ./garminconnect-tokens:/home/appuser/.garminconnect # (persistent tokens storage - garminconnect-tokens folder must be owned by 1000:1000) - should be './garminconnect-tokens:/root/.garminconnect' instead if you are using using user: root
+    env_file:
+      - .env # provides GARMINCONNECT_EMAIL and GARMINCONNECT_BASE64_PASSWORD
     environment:
       - INFLUXDB_HOST=influxdb
       - INFLUXDB_PORT=8086 # Influxdb V3 maps to 8181 instead of 8086 of V1
@@ -17,10 +19,6 @@ services:
       - INFLUXDB_PASSWORD=influxdb_secret_password # (Required for influxdb 1.x, ignore for influxdb 3.x - set the 3.x specific variables)
       - INFLUXDB_DATABASE=GarminStats
       - GARMINCONNECT_IS_CN=False # Set this to True if you are in mainland China or use Garmin-cn (Default False)
-      ####################################################################################
-      - GARMINCONNECT_EMAIL=ajosmond@gmail.com # optional, read the setup docs. (remove or comment out this line altogether if not used)
-      - GARMINCONNECT_BASE64_PASSWORD=YjFyQ2xSN0Z6cWFPUG5aVVdkWE8= # optional, must be Base64 encoded, read setup docs. (remove or comment out this line altogether if not used)
-      ####################################################################################
       # The following ENV variables are required only if you are using influxdb V3 (You won't have to set the above )
       #####################################################################################
       # - INFLUXDB_VERSION=1 # Required for influxdb V3, Default is 1, must be overridden with 3 if using Influxdb V3
